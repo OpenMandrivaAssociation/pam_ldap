@@ -1,5 +1,5 @@
 %define name 	pam_ldap
-%define version 183
+%define version 184
 %define rel 1
 
 # conditionally define %mkrel
@@ -25,7 +25,8 @@ Source3:	snprintf.h
 Source4:	snprintf.c
 Patch2:		pam_ldap-156-makefile.patch
 Patch3:		pam_ldap-176-dnsconfig.patch
-# http://bugzilla.padl.com/show_bug.cgi?id=291
+# http://bugzilla.padl.com/show_bug.cgi?id=324
+Patch4:		pam_ldap-184-lockoutmsg.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
 Requires:	nss_ldap >= 217
 
@@ -45,6 +46,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %setup -q
 %patch2 -p1 -b .pam_makefile
+%patch4 -p1 -b .lockoutmsg
 
 %if %{?_with_dnsconfig:1}%{!?_with_dnsconfig:0}
 %patch3 -p1 -b .dnsconfig
