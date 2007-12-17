@@ -27,7 +27,6 @@ Patch2:		pam_ldap-156-makefile.patch
 Patch3:		pam_ldap-176-dnsconfig.patch
 # http://bugzilla.padl.com/show_bug.cgi?id=324
 Patch4:		pam_ldap-184-lockoutmsg.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
 Requires:	nss_ldap >= 217
 
 %description
