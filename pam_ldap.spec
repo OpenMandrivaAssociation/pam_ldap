@@ -1,16 +1,10 @@
-%define name 	pam_ldap
-%define version 184
-%define rel 2
-
 # conditionally define %mkrel
-11%{?!mkrel:%define mkrel(c:) %{-c:0.%{-c*}.}%{!?_with_unstable:%(perl -e '$_="%{1}";m/(.\*\\D\+)?(\\d+)$/;$rel=${2}-1;re;print "$1$rel";').%{?subrel:%subrel}%{!?subrel:1}.%{?distversion:%distversion}%{?!distversion:%(echo $[%{mdkversion}/10])}}%{?_with_unstable:%{1}}%{?distsuffix:%distsuffix}%{?!distsuffix:mdk}}
-
-%define release %mkrel %rel
+%{?!mkrel:%define mkrel(c:) %{-c:0.%{-c*}.}%{!?_with_unstable:%(perl -e '$_="%{1}";m/(.\*\\D\+)?(\\d+)$/;$rel=${2}-1;re;print "$1$rel";').%{?subrel:%subrel}%{!?subrel:1}.%{?distversion:%distversion}%{?!distversion:%(echo $[%{mdkversion}/10])}}%{?_with_unstable:%{1}}%{?distsuffix:%distsuffix}%{?!distsuffix:mdk}}
 
 Summary:	NSS library and PAM module for LDAP
-Name: 		%{name}
-Version: 	%{version}
-Release: 	%{release}
+Name: 		pam_ldap
+Version: 	184
+Release: 	%mkrel 3
 License:	LGPL
 Group:		System/Libraries
 URL: 		http://www.padl.com/
@@ -27,8 +21,8 @@ Patch2:		pam_ldap-156-makefile.patch
 Patch3:		pam_ldap-176-dnsconfig.patch
 # http://bugzilla.padl.com/show_bug.cgi?id=324
 Patch4:		pam_ldap-184-lockoutmsg.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
 Requires:	nss_ldap >= 217
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Pam_ldap is a module for Linux-PAM that supports password changes, V2
@@ -42,7 +36,6 @@ LDAP.
 %{?_with_dnsconfig:This package is built with DNS configuration support}
 
 %prep
-rm -rf $RPM_BUILD_ROOT
 
 %setup -q
 %patch2 -p1 -b .pam_makefile
@@ -56,7 +49,6 @@ done
 %endif
 
 %build
-rm -rf $RPM_BUILD_ROOT
 %serverbuild
 #aclocal && automake && autoheader && autoconf
 #autoreconf --force
@@ -69,25 +61,24 @@ export CFLAGS="$CFLAGS -fno-strict-aliasing"
 %__make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{_mandir}/man5
+rm -rf %{buildroot}
 
-install -d $RPM_BUILD_ROOT/%{_sysconfdir}
-install -d $RPM_BUILD_ROOT/%{_lib}/security
+mkdir -p %{buildroot}%{_mandir}/man5
+
+install -d %{buildroot}/%{_sysconfdir}
+install -d %{buildroot}/%{_lib}/security
 
 # Install the module for PAM.
-%make install DESTDIR="$RPM_BUILD_ROOT" libdir=/%{_lib}
+%make install DESTDIR="%{buildroot}" libdir=/%{_lib}
 
 # Remove unpackaged file
-rm -rf	$RPM_BUILD_ROOT%{_sysconfdir}/ldap.conf 
+rm -rf	%{buildroot}%{_sysconfdir}/ldap.conf 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog COPYING COPYING.LIB README pam.d chsh chfn ldap.conf
 /%{_lib}/security/*so*
 %{_mandir}/man?/*
-
-
