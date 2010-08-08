@@ -3,8 +3,8 @@
 
 Summary:	NSS library and PAM module for LDAP
 Name: 		pam_ldap
-Version: 	184
-Release: 	%mkrel 6
+Version: 	185
+Release: 	%mkrel 1
 License:	LGPL
 Group:		System/Libraries
 URL: 		http://www.padl.com/
@@ -17,6 +17,7 @@ Source1:	resolve.c
 Source2:	resolve.h
 Source3:	snprintf.h
 Source4:	snprintf.c
+Patch1:     pam_ldap-185-fix-script-invocation.patch
 Patch2:		pam_ldap-156-makefile.patch
 Patch3:		pam_ldap-176-dnsconfig.patch
 # http://bugzilla.padl.com/show_bug.cgi?id=324
@@ -36,8 +37,8 @@ LDAP.
 %{?_with_dnsconfig:This package is built with DNS configuration support}
 
 %prep
-
 %setup -q
+%patch1 -p1
 %patch2 -p1 -b .pam_makefile
 %patch4 -p1 -b .lockoutmsg
 
@@ -57,7 +58,7 @@ rm -f configure
 libtoolize --copy --force; aclocal; autoconf; automake
 
 export CFLAGS="$CFLAGS -fno-strict-aliasing"
-%configure --with-ldap-lib=openldap --libdir=/%{_lib}
+%configure2_5x --with-ldap-lib=openldap --libdir=/%{_lib}
 %__make
 
 %install
