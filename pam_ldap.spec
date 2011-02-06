@@ -3,7 +3,7 @@
 
 Summary:	NSS library and PAM module for LDAP
 Name: 		pam_ldap
-Version: 	185
+Version: 	186
 Release: 	%mkrel 1
 License:	LGPL
 Group:		System/Libraries
@@ -17,7 +17,6 @@ Source1:	resolve.c
 Source2:	resolve.h
 Source3:	snprintf.h
 Source4:	snprintf.c
-Patch1:     pam_ldap-185-fix-script-invocation.patch
 Patch2:		pam_ldap-156-makefile.patch
 Patch3:		pam_ldap-176-dnsconfig.patch
 # http://bugzilla.padl.com/show_bug.cgi?id=324
@@ -38,7 +37,6 @@ LDAP.
 
 %prep
 %setup -q
-%patch1 -p1
 %patch2 -p1 -b .pam_makefile
 %patch4 -p1 -b .lockoutmsg
 
