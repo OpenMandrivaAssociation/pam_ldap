@@ -1,6 +1,7 @@
+---
 sources:
-  "pam_ldap-186.tar.gz:"	abb37c92dde446687272849ed29eb5c0fe1a55a6
-  "resolve.c:"	4cb3d251d244a9e182e3b90df3a7c80c23e1606f
-  "resolve.h:"	bfc898b06fc104edc294a64e4d2477fbd8979e2b
-  "snprintf.c:"	2c4766fd4a33104fb75daa34bb93419991570bb3
-  "snprintf.h:"	e30f476df8be68a0ac9735ff333f26f9fe2a899d
+  pam_ldap-186.tar.gz: abb37c92dde446687272849ed29eb5c0fe1a55a6
+  resolve.c: 4cb3d251d244a9e182e3b90df3a7c80c23e1606f
+  resolve.h: bfc898b06fc104edc294a64e4d2477fbd8979e2b
+  snprintf.c: 2c4766fd4a33104fb75daa34bb93419991570bb3
+  snprintf.h: e30f476df8be68a0ac9735ff333f26f9fe2a899d
