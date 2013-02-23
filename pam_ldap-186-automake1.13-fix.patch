@@ -1,0 +1,11 @@
+--- pam_ldap-186/configure.in~	2010-11-08 01:58:44.000000000 +0100
++++ pam_ldap-186/configure.in	2013-02-23 02:18:44.639712872 +0100
+@@ -3,7 +3,7 @@ AC_CANONICAL_SYSTEM
+ AC_PREFIX_DEFAULT()
+ 
+ AM_INIT_AUTOMAKE(pam_ldap, 185)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADER(config.h)
+ 
+ AC_PROG_CC
+ AC_PROG_CPP

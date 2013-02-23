@@ -11,7 +11,6 @@ URL: 		http://www.padl.com/
 #BuildRequires:	db_nss-devel >= 4.2.52-5mdk
 BuildRequires:	openldap-devel
 BuildRequires:	pam-devel
-BuildRequires:	automake1.4
 Source0: 	http://www.padl.com/download/%{name}-%{version}.tar.gz
 Source1:	resolve.c
 Source2:	resolve.h
@@ -21,6 +20,7 @@ Patch2:		pam_ldap-156-makefile.patch
 Patch3:		pam_ldap-176-dnsconfig.patch
 # http://bugzilla.padl.com/show_bug.cgi?id=324
 Patch4:		pam_ldap-184-lockoutmsg.patch
+Patch5:		pam_ldap-186-automake1.13-fix.patch
 Requires:	nss_ldap >= 217
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -46,14 +46,11 @@ for i in %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4
 do cp $i .
 done
 %endif
+%patch5 -p1 -b .am113~
+autoreconf -fiv
 
 %build
 %serverbuild
-#aclocal && automake && autoheader && autoconf
-#autoreconf --force
-
-rm -f configure
-libtoolize --copy --force; aclocal; autoconf; automake
 
 export CFLAGS="$CFLAGS -fno-strict-aliasing"
 %configure2_5x --with-ldap-lib=openldap --libdir=/%{_lib}
