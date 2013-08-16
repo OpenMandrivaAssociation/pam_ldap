@@ -6,10 +6,7 @@ Version:	186
 Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
-URL:		http://www.padl.com/
-#BuildRequires:	db_nss-devel >= 4.2.52-5mdk
-BuildRequires:	openldap-devel
-BuildRequires:	pam-devel
+Url:		http://www.padl.com/
 Source0:	http://www.padl.com/download/%{name}-%{version}.tar.gz
 Source1:	resolve.c
 Source2:	resolve.h
@@ -20,6 +17,9 @@ Patch3:		pam_ldap-176-dnsconfig.patch
 # http://bugzilla.padl.com/show_bug.cgi?id=324
 Patch4:		pam_ldap-184-lockoutmsg.patch
 Patch5:		pam_ldap-186-automake1.13-fix.patch
+#BuildRequires:	db_nss-devel >= 4.2.52-5mdk
+BuildRequires:	openldap-devel
+BuildRequires:	pam-devel
 Requires:	nss_ldap >= 217
 
 %description
@@ -50,9 +50,9 @@ autoreconf -fiv
 
 %build
 %serverbuild
-
-%configure2_5x	--with-ldap-lib=openldap \
-		--libdir=/%{_lib}
+%configure2_5x \
+	--with-ldap-lib=openldap \
+	--libdir=/%{_lib}
 %make
 
 %install
@@ -65,3 +65,4 @@ rm %{buildroot}%{_sysconfdir}/ldap.conf
 %doc AUTHORS ChangeLog README pam.d chsh chfn ldap.conf
 /%{_lib}/security/*so*
 %{_mandir}/man?/*
+
