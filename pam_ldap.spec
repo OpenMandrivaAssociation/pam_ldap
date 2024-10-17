@@ -6,7 +6,7 @@ Version:	186
 Release:	14
 License:	LGPLv2+
 Group:		System/Libraries
-Url:		http://www.padl.com/
+Url:		https://www.padl.com/
 Source0:	http://www.padl.com/download/%{name}-%{version}.tar.gz
 Source1:	resolve.c
 Source2:	resolve.h
